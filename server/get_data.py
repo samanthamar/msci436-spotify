@@ -68,11 +68,46 @@ def get_popularity(audio_features_dict):
     # Format {track_id: {audio_features: {}, popularity: {}}}
     return new_a_f_dict
 
-def get_data(): 
+def get_data_as_dict(): 
     tracks = get_tracks(playlists)
     audio_features = get_audio_features(tracks)
     data = get_popularity(audio_features)
     pprint(data)
     return data
 
-get_data()
+def get_data_as_array(dict_data): 
+    # currently 13 features 
+    X = []
+    Y = []
+    for track_id, data in dict_data.items(): 
+        # for features
+        # data.append()
+       a_f = data['audio_features']
+       acousticness = a_f['acousticness']
+       danceability = a_f['danceability']
+       duration = a_f['duration_ms']
+       energy = a_f['energy']
+       instrumentalness = a_f['instrumentalness']
+       key = a_f['key']
+       liveness = a_f['liveness']
+       loudness = a_f['loudness']
+       mode = a_f['mode']
+       speechiness = a_f['speechiness']
+       tempo = a_f['tempo']
+       time_signature = a_f['time_signature']
+       valence = a_f['valence']
+       # append to array
+       X.append([acousticness, danceability, 
+       duration, energy, 
+       instrumentalness, key, 
+       energy, liveness, 
+       loudness, mode, 
+       speechiness, tempo, 
+       time_signature, valence])
+       Y.append(data['popularity'])
+    # Convert to np array
+    X = np.array(X)
+    Y =np.array(Y)
+    return (X,Y)
+
+X,Y = get_data_as_array(get_data_as_dict())
