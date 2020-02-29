@@ -1,5 +1,6 @@
 import spotipy
 import os
+import numpy as np
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 from pprint import pprint
@@ -43,13 +44,16 @@ def get_tracks(playlists):
 def get_audio_features(tracks):
     '''
     Input: set of playlist ids 
-    Output: list of dicts of audio_features 
+    Output: dict with format: {'track_id': {audio_features: {}}}
     '''    
-    # format: {'p_id': [{audio_features}]}
     audio_features = dict()
-    for track in tracks: 
-        # pprint(a_f)
-        audio_features[track] = sp.audio_features(track)
+    keys_to_remove = ['id', 'track_href', 'type', 'uri', 'analysis_url']
+    for track_id in tracks: 
+        a_f = (sp.audio_features(track_id))[0]
+        # remove unneeded features 
+        for key in keys_to_remove:
+            a_f.pop(key)
+        audio_features[track_id] = {'audio_features': a_f}
     return audio_features
 
 def get_popularity(audio_features_dict): 
@@ -60,8 +64,8 @@ def get_popularity(audio_features_dict):
     new_a_f_dict = audio_features_dict
     for track_id in audio_features_dict.keys(): 
         popularity = (sp.track(track_id))['popularity']
-        new_a_f_dict[track_id].append({'popularity': popularity}) 
-    # Format {track_id: [{audio_features}, {popularity}]}
+        new_a_f_dict[track_id]['popularity'] = popularity
+    # Format {track_id: {audio_features: {}, popularity: {}}}
     return new_a_f_dict
 
 def get_data(): 
