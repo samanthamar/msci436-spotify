@@ -66,3 +66,12 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+Python3 Package Requirements 
+- Listed in `requirements.txt` 
+- To install these packages, run: `pip3 install -r requirements.txt`
+
+To run server: `python3 app.py` 
+
+Note for local dev:
+- Need to provide a dotenv in /server with the client_id and client_secret (ask Sam)
