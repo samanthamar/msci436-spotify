@@ -4,6 +4,7 @@ import numpy as np
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 from pprint import pprint
+import pandas as pd
 
 # Load env file and env vars
 load_dotenv()
@@ -72,7 +73,6 @@ def get_data_as_dict():
     tracks = get_tracks(playlists)
     audio_features = get_audio_features(tracks)
     data = get_popularity(audio_features)
-    pprint(data)
     return data
 
 def get_data_as_array(dict_data): 
@@ -108,6 +108,11 @@ def get_data_as_array(dict_data):
     # Convert to np array
     X = np.array(X)
     Y =np.array(Y)
-    return (X,Y)
+    # Convert to dataframe
+    df_X = pd.DataFrame(X)
+    # df_Y = pd.DataFrame(Y)
+    return (df_X,Y)
 
 X,Y = get_data_as_array(get_data_as_dict())
+pprint(X)
+pprint(Y)
