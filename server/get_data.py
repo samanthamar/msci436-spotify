@@ -120,7 +120,9 @@ def get_data_as_csv(dict_data):
 # Only need to run once to get the csv, which we already have 
 #    get_data_as_csv(get_data_as_dict())
 
-csv_file = 'dataset.csv'
+csv_file = 'dataset_bigger_bins_3.csv' # split into 3 buckets 
+# csv_file = 'dataset_big_buckets.csv' # split into 4 buckets 
+# csv_file = 'dataset_small_buckets_3.csv' # split into 10 buckets 
 def get_df(csv_file): 
     '''
     Input: csv file with all track data 
