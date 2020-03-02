@@ -20,7 +20,7 @@ sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_
 # global top 50, old school metal
 playlists = ['37i9dQZEVXbMDoHDwVN2tF', '37i9dQZF1DX2LTcinqsO68']
 
-albums_of_2019 = "albums_of_2019.csv"
+albums_of_2019 = "albums_of_2018.csv"
 
 def get_tracks_from_album(listOfAlbums) :
     tracks = set()
@@ -107,7 +107,7 @@ def get_data_as_array(dict_data):
     # currently 13 features 
     X = []
     Y = []
-    with open('dataset.csv', 'w', newline='') as file:
+    with open('dataset2.csv', 'w', newline='') as file:
         writer = csv.writer(file, delimiter=',')
         writer.writerow(['Track ID','accousticness','danceability', 'duration', 'energy', 
         'instrumentalness', 'key', 
