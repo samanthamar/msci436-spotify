@@ -111,7 +111,7 @@ def get_data_as_array(dict_data):
         writer = csv.writer(file, delimiter=',')
         writer.writerow(['Track ID','accousticness','danceability', 'duration', 'energy', 
         'instrumentalness', 'key', 
-        'energy', 'liveness', 
+        'liveness', 
         'loudness', 'mode', 
         'speechiness', 'tempo', 
         'time_signature', 'valence',
@@ -137,7 +137,7 @@ def get_data_as_array(dict_data):
             writer.writerow([track_id, acousticness, danceability, 
             duration, energy, 
             instrumentalness, key, 
-            energy, liveness, 
+             liveness, 
             loudness, mode, 
             speechiness, tempo, 
             time_signature, valence, data['popularity']])
