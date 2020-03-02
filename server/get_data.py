@@ -107,32 +107,49 @@ def get_data_as_array(dict_data):
     # currently 13 features 
     X = []
     Y = []
-    for track_id, data in dict_data.items(): 
-        # for features
-        # data.append()
-       a_f = data['audio_features']
-       acousticness = a_f['acousticness']
-       danceability = a_f['danceability']
-       duration = a_f['duration_ms']
-       energy = a_f['energy']
-       instrumentalness = a_f['instrumentalness']
-       key = a_f['key']
-       liveness = a_f['liveness']
-       loudness = a_f['loudness']
-       mode = a_f['mode']
-       speechiness = a_f['speechiness']
-       tempo = a_f['tempo']
-       time_signature = a_f['time_signature']
-       valence = a_f['valence']
-       # append to array
-       X.append([acousticness, danceability, 
-       duration, energy, 
-       instrumentalness, key, 
-       energy, liveness, 
-       loudness, mode, 
-       speechiness, tempo, 
-       time_signature, valence])
-       Y.append(data['popularity'])
+    with open('dataset.csv', 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=',')
+        writer.writerow(['Track ID','accousticness','danceability', 'duration', 'energy', 
+        'instrumentalness', 'key', 
+        'energy', 'liveness', 
+        'loudness', 'mode', 
+        'speechiness', 'tempo', 
+        'time_signature', 'valence',
+        'popularity'])
+        for track_id, data in dict_data.items(): 
+            # for features
+            # data.append()
+            a_f = data['audio_features']
+            acousticness = a_f['acousticness']
+            danceability = a_f['danceability']
+            duration = a_f['duration_ms']
+            energy = a_f['energy']
+            instrumentalness = a_f['instrumentalness']
+            key = a_f['key']
+            liveness = a_f['liveness']
+            loudness = a_f['loudness']
+            mode = a_f['mode']
+            speechiness = a_f['speechiness']
+            tempo = a_f['tempo']
+            time_signature = a_f['time_signature']
+            valence = a_f['valence']
+            # append to array
+            writer.writerow([track_id, acousticness, danceability, 
+            duration, energy, 
+            instrumentalness, key, 
+            energy, liveness, 
+            loudness, mode, 
+            speechiness, tempo, 
+            time_signature, valence, data['popularity']])
+
+            X.append([acousticness, danceability, 
+            duration, energy, 
+            instrumentalness, key, 
+            energy, liveness, 
+            loudness, mode, 
+            speechiness, tempo, 
+            time_signature, valence])
+            Y.append(data['popularity'])
     # Convert to np array
     X = np.array(X)
     Y =np.array(Y)
