@@ -14,26 +14,18 @@ client_secret = os.getenv('CLIENT_SECRET')
 # init the spotipy client 
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
 
-# NOTE; we need to diversify these lists 
-# Populate list of playlists to get data from:
-# global top 50, today's top hits, canada top 50 (these are all the same songs...)
-# playlists = ['37i9dQZEVXbMDoHDwVN2tF', '37i9dQZF1DXcBWIGoYBM5M', '37i9dQZEVXbKj23U1GF4IR']
-# global top 50, old school metal
-playlists = ['37i9dQZEVXbMDoHDwVN2tF', '37i9dQZF1DX2LTcinqsO68']
-
 albums_of_2019 = "albums_of_2019.csv"
 
-def get_tracks_from_album(listOfAlbums) :
+def get_tracks_from_albums(listOfAlbums) :
+    '''
+    Input: listOfAlbums
+    Output: set of track ids 
+    '''    
     tracks = set()
-    offset = 0
-    limit = 50
-
     with open(listOfAlbums, newline='', encoding='utf-8-sig') as csvfile:
         csv_reader = csv.reader(csvfile, delimiter=',')
-
         # Reading all artists/albums in csv
         for row in csv_reader:
-
             # searching albums based on artist name and album name
             result = sp.search(q = 'album:'+ row[1]+ ' artist:'+ row[0], type='album')
             album_songs = []
@@ -43,28 +35,6 @@ def get_tracks_from_album(listOfAlbums) :
                 for track in album_songs['items']:
                     tracks.add(track['id'])
     print("DONE GETTING TRACKS")
-    return tracks
-
-def get_tracks(playlists):
-    '''
-    Input: list of playlist ids 
-    Output: set track_ids 
-    '''
-    # use a set to avoid duplicate ids
-    tracks = set() 
-    offset = 0 
-    for pl_id in playlists:
-        p = []
-        while True:
-            response = sp.playlist_tracks(pl_id,
-                                  offset=offset,
-                                  fields='items.track.id,total')
-            for track in response['items']:
-                tracks.add(track['track']['id'])
-            offset = offset + len(response['items'])
-            if len(response['items']) == 0:
-                break
-    
     return tracks
 
 def get_audio_features(tracks):
@@ -97,25 +67,30 @@ def get_popularity(audio_features_dict):
     return new_a_f_dict
 
 def get_data_as_dict(): 
-    # tracks = get_tracks(playlists)
-    tracks = get_tracks_from_album(albums_of_2019)
+    '''
+    Input: none
+    Output: get all audio feature data and popularity scores as a dict 
+    '''    
+    tracks = get_tracks_from_albums(albums_of_2019)
     audio_features = get_audio_features(tracks)
     data = get_popularity(audio_features)
     return data
 
-def get_data_as_array(dict_data): 
-    # currently 13 features 
-    X = []
-    Y = []
+def get_data_as_csv(dict_data): 
+    '''
+    Input: audio features/popularity score dict 
+    Output: dictionary data as csv for reusability
+    ''' 
     with open('dataset.csv', 'w', newline='') as file:
         writer = csv.writer(file, delimiter=',')
+        # Create the headers 
         writer.writerow(['Track ID','accousticness','danceability', 'duration', 'energy', 
-        'instrumentalness', 'key', 
-        'energy', 'liveness', 
+        'instrumentalness', 'key', 'liveness', 
         'loudness', 'mode', 
         'speechiness', 'tempo', 
         'time_signature', 'valence',
         'popularity'])
+        # Write the rows 
         for track_id, data in dict_data.items(): 
             # for features
             # data.append()
@@ -136,28 +111,33 @@ def get_data_as_array(dict_data):
             # append to array
             writer.writerow([track_id, acousticness, danceability, 
             duration, energy, 
-            instrumentalness, key, 
-            energy, liveness, 
+            instrumentalness, key, liveness, 
             loudness, mode, 
             speechiness, tempo, 
             time_signature, valence, data['popularity']])
 
-            X.append([acousticness, danceability, 
-            duration, energy, 
-            instrumentalness, key, 
-            energy, liveness, 
-            loudness, mode, 
-            speechiness, tempo, 
-            time_signature, valence])
-            Y.append(data['popularity'])
-    # Convert to np array
-    X = np.array(X)
-    Y =np.array(Y)
-    # Convert to dataframe
-    df_X = pd.DataFrame(X)
-    # df_Y = pd.DataFrame(Y)
-    return (df_X,Y)
+# NOTE: Uncomment me to execute me! 
+# Only need to run once to get the csv, which we already have 
+#    get_data_as_csv(get_data_as_dict())
 
-X,Y = get_data_as_array(get_data_as_dict())
-pprint(X)
-pprint(Y)
+csv_file = 'dataset.csv'
+def get_df(csv_file): 
+    '''
+    Input: csv file with all track data 
+    Output: pandas data frames for input, output 
+    ''' 
+    df = pd.read_csv(csv_file) 
+    target_column = ['popularity']
+    # Don't include track ID as a predictor 
+    predictors = list(set(list(df.columns))-set(target_column) - set(['Track ID']))
+    print(predictors)
+    X = df[predictors].values
+    Y = (df[target_column].values)
+    print(Y)
+    return (X, Y)
+
+X,Y = get_df(csv_file)
+
+
+
+
