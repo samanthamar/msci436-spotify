@@ -1,0 +1,43 @@
+Sub binify()
+
+    For i = 2 To 8206
+    
+    popularity = Cells(i, 16).Value
+    
+    If popularity >= 0 And popularity <= 10 Then
+        Cells(i, 16).Value = 1
+        
+    ElseIf popularity >= 11 And popularity <= 20 Then
+        Cells(i, 16).Value = 2
+        
+    ElseIf popularity >= 21 And popularity <= 30 Then
+        Cells(i, 16).Value = 3
+        
+    ElseIf popularity >= 31 And popularity <= 40 Then
+        Cells(i, 16).Value = 4
+        
+    ElseIf popularity >= 41 And popularity <= 50 Then
+        Cells(i, 16).Value = 5
+        
+    ElseIf popularity >= 51 And popularity <= 60 Then
+        Cells(i, 16).Value = 6
+        
+    ElseIf popularity >= 61 And popularity <= 70 Then
+        Cells(i, 16).Value = 7
+        
+    ElseIf popularity >= 71 And popularity <= 80 Then
+        Cells(i, 16).Value = 8
+        
+    ElseIf popularity >= 81 And popularity <= 90 Then
+        Cells(i, 16).Value = 9
+        
+    ElseIf popularity >= 91 And popularity <= 100 Then
+        Cells(i, 16).Value = 10
+        
+    End If
+    
+    Next i
+
+
+End Sub
+
