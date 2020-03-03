@@ -3,3 +3,4 @@ spotipy
 python-dotenv
 numpy
 scikit-learn
+flask_cors

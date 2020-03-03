@@ -1,8 +1,10 @@
 import pandas as pd
 from flask import Flask, request 
-from ANN import train, predict 
+from ANN import train, predict
+from flask_cors import CORS 
 
 app = Flask(__name__) 
+CORS(app)
 nn = train()
 
 @app.route('/')
