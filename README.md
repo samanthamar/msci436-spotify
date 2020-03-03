@@ -75,3 +75,6 @@ To run server: `python3 app.py`
 
 Note for local dev:
 - Need to provide a dotenv in /server with the client_id and client_secret (ask Sam)
+
+Routes: 
+- Get prediction: `http://127.0.0.1:5000/predict`
