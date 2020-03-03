@@ -16,7 +16,7 @@ X_train = scaler.transform(X_train)
 X_test = scaler.transform(X_test)
 
 # Train the model
-nn = MLPClassifier(activation='logistic', solver='sgd', hidden_layer_sizes=(13), max_iter=500)
+nn = MLPClassifier(activation='logistic', solver='sgd', hidden_layer_sizes=(6), max_iter=500)
 nn.fit(X_train, Y_train)
 
 # Test the model

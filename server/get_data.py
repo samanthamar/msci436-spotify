@@ -120,9 +120,14 @@ def get_data_as_csv(dict_data):
 # Only need to run once to get the csv, which we already have 
 #    get_data_as_csv(get_data_as_dict())
 
-csv_file = 'dataset_bigger_bins_3.csv' # split into 3 buckets 
+# ONLY 2019 DATA 
+# csv_file = 'dataset_bigger_bins_3.csv' # split into 3 buckets 
 # csv_file = 'dataset_big_buckets.csv' # split into 4 buckets 
 # csv_file = 'dataset_small_buckets_3.csv' # split into 10 buckets 
+# 2019 + 2018 Data 
+# csv_file = 'dataset_2018_2019_4_bins.csv'
+csv_file = 'dataset_2018_2019_3_bins.csv'
+
 def get_df(csv_file): 
     '''
     Input: csv file with all track data 
@@ -132,10 +137,8 @@ def get_df(csv_file):
     target_column = ['popularity']
     # Don't include track ID as a predictor 
     predictors = list(set(list(df.columns))-set(target_column) - set(['Track ID']))
-    print(predictors)
     X = df[predictors].values
     Y = (df[target_column].values)
-    print(Y)
     return (X, Y)
 
 X,Y = get_df(csv_file)
