@@ -126,7 +126,7 @@ def get_data_as_csv(dict_data):
 # csv_file = 'dataset_small_buckets_3.csv' # split into 10 buckets 
 # 2019 + 2018 Data 
 # csv_file = 'dataset_2018_2019_4_bins.csv'
-csv_file = '../dataset_2018_2019_3_bins.csv' 
+csv_file = 'dataset_2018_2019_3_bins.csv' 
 # csv_file = 'dataset_2018_2019_3_bins.csv' # Use this file when checking accuarcy of model
 
 def get_df(csv_file): 
