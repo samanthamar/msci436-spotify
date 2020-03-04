@@ -11,9 +11,9 @@ nn = train()
 def default(): 
     return {"success": 200}
 
-@app.route('/predict', methods=['GET'])
+@app.route('/predict', methods=['POST'])
 def predict_popularity():
-    if request.method == 'GET':
+    if request.method == 'POST':
         # Get features from form data 
         acousticness = request.form['acousticness']
         danceability = request.form['danceability']
