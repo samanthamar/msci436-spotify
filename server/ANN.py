@@ -1,4 +1,3 @@
-from matplotlib import pyplot as plt 
 from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
@@ -18,7 +17,7 @@ X_test = scaler.transform(X_test)
 def train(): 
     # Train the model
     print("===============Training ANN===============")
-    nn = MLPClassifier(activation='logistic', solver='sgd', hidden_layer_sizes=(6), max_iter=500)
+    nn = MLPClassifier(activation='relu', solver='sgd', hidden_layer_sizes=(6), max_iter=500)
     nn.fit(X_train, Y_train)
     print("===============Training complete=============")
     # return the neural network

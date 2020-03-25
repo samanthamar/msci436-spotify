@@ -15,6 +15,7 @@ client_secret = os.getenv('CLIENT_SECRET')
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(client_id=client_id, client_secret=client_secret))
 
 albums_of_2019 = "albums_of_2019.csv"
+albums_of_2018 = "albums_of_2018.csv"
 
 def get_tracks_from_albums(listOfAlbums) :
     '''
