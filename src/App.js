@@ -71,7 +71,7 @@ class App extends React.Component {
     return (
       <div className = "App" >
         <header className="App-header">Determining Song Success!</header><br></br>
-        <p>Least popular - 3 {'   '} Medium popularity - 2 {'   '}  Most popular - 0</p>
+        <p>Lowest popularity - 1 {'   '}  Medium popularity - 2 {'   '}  Highest popularity - 3</p>
         <br></br>
         {resultsShown ? 
         <div>
