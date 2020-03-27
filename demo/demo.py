@@ -21,11 +21,13 @@ def get_data(track_id):
     data = dict()
     # First get the audio features
     keys_to_remove = ['id', 'track_href', 'type', 'uri', 'analysis_url']
+    name = sp.track(track_id)['name']
     a_f = (sp.audio_features(track_id))[0]
     # remove unneeded features 
     for key in keys_to_remove:
         a_f.pop(key)
     data[track_id] = {'audio_features': a_f}
+    data['name'] = name 
     # Now get the popularity 
     popularity = (sp.track(track_id))['popularity']
     data['popularity'] = popularity
